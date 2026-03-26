@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Alejandro Simonutti · DevOps en formación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0a0f, #030305);
+            color: #eef2ff;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* tipografía suave */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap');
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* header / navegación sutil */
+        .navbar {
+            padding: 1.5rem 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.25);
+        }
+
+        .logo h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #c084fc 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .logo p {
+            font-size: 0.85rem;
+            color: #a78bfa;
+            margin-top: 0.2rem;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #c084fc;
+        }
+
+        /* secciones generales */
+        section {
+            margin: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: #7c3aed;
+            border-radius: 4px;
+        }
+
+        /* tarjeta sobre mí */
+        .about-card {
+            background: rgba(15, 15, 25, 0.65);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 2rem 2rem;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+
+        .about-card p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            font-weight: 400;
+        }
+
+        .badge-role {
+            display: inline-block;
+            background: #7c3aed20;
+            border-left: 3px solid #7c3aed;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            color: #c4b5fd;
+        }
+
+        /* skills grid */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background: #111118;
+            padding: 0.85rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid #2d2a3e;
+            transition: all 0.25s;
+            color: #ddd9ff;
+            backdrop-filter: blur(2px);
+        }
+
+        .skill-item:hover {
+            border-color: #7c3aed;
+            background: #1e1a2f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 14px -8px #7c3aed40;
+        }
+
+        /* proyectos: cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .project-card {
+            background: #0c0c14;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid #232030;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 12px 20px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        .project-card:hover {
+            border-color: #7c3aed;
+            transform: translateY(-6px);
+            box-shadow: 0 24px 36px -12px rgba(124, 58, 237, 0.25);
+        }
+
+        .card-img-placeholder {
+            background: linear-gradient(145deg, #15151f, #0b0b10);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-img-placeholder svg {
+            opacity: 0.65;
+            transition: opacity 0.2s;
+        }
+
+        .project-card:hover .card-img-placeholder svg {
+            opacity: 1;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f0f3ff;
+        }
+
+        .project-content p {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: #1e1b2b;
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #b9a9ff;
+            letter-spacing: 0.3px;
+        }
+
+        /* footer */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 0 3rem;
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+            text-align: center;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0a0a10;
+            padding: 0.75rem 1.8rem;
+            border-radius: 60px;
+            text-decoration: none;
+            color: #e2e8f0;
+            font-weight: 500;
+            transition: 0.2s;
+            border: 1px solid #2c293b;
+            backdrop-filter: blur(2px);
+        }
+
+        .github-link:hover {
+            background: #7c3aed20;
+            border-color: #7c3aed;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .footer-copy {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #6c6a7a;
+        }
+
+        /* responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .nav-links a {
+                margin: 0 0.8rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .about-card p {
+                font-size: 1rem;
+            }
+            .skills-grid {
+                justify-content: center;
+            }
+            .container {
+                padding: 0 1.2rem;
+            }
+        }
+
+        /* animación sutil al cargar */
+        .fade-up {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        button, a {
+            cursor: pointer;
+        }
+
+        /* placeholders decorativos sin interacción compleja */
+        .empty-message {
+            color: #7e7b96;
+            font-size: 0.75rem;
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- navegación simple y elegante -->
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Alejandro Simonutti</h1>
+                <p>⚙️ Ingeniero en Computación · DevOps en formación</p>
+            </div>
+            <div class="nav-links">
+                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#skills">Skills</a>
+                <a href="#proyectos">Proyectos</a>
+            </div>
+        </nav>
+
+        <main>
+            <!-- Sección Sobre mí -->
+            <section id="sobre-mi" class="fade-up">
+                <h2 class="section-title">Sobre mí</h2>
+                <div class="about-card">
+                    <p>👋 ¡Hola! Soy <strong>Alejandro Simonutti</strong>, Ingeniero en Computación con sólida base en sistemas y arquitectura de software.  
+                    Actualmente estoy dando un giro estratégico en mi carrera: <strong class="highlight">me especializo en DevOps</strong> para combinar mi experiencia en desarrollo con la filosofía de automatización, escalabilidad y confiabilidad.  
+                    Este bootcamp es el trampolín definitivo para conseguir <strong>mi primer trabajo como DevOps Engineer</strong>, donde pueda aplicar infraestructura como código, pipelines CI/CD y mejores prácticas cloud-native.</p>
+                    <div class="badge-role">
+                        🚀 Objetivo: acelerar mi transición a DevOps — Linux · Contenedores · Orquestación
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Skills que voy a aprender -->
+            <section id="skills" class="fade-up">
+                <h2 class="section-title">Skills que voy a aprender</h2>
+                <div class="skills-grid">
+                    <span class="skill-item">🐧 Linux (administración avanzada)</span>
+                    <span class="skill-item">🐳 Docker & Docker Compose</span>
+                    <span class="skill-item">⚙️ CI/CD (GitHub Actions / GitLab CI)</span>
+                    <span class="skill-item">☸️ Kubernetes (K8s)</span>
+                    <span class="skill-item">🏗️ Terraform (Infra as Code)</span>
+                </div>
+                <p style="margin-top: 1.2rem; font-size: 0.85rem; color: #a29fbf;">📘 Hoja de ruta DevOps: automatización, escalabilidad y monitoreo.</p>
+            </section>
+
+            <!-- Sección Proyectos: 3 placeholders estilo card -->
+            <section id="proyectos" class="fade-up">
+                <h2 class="section-title">Proyectos destacados</h2>
+                <div class="projects-grid">
+                    <!-- Card Proyecto 1 -->
+                    <div class="project-card">
+                        <div class="card-img-placeholder">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <path d="M22 6L12 13L2 6" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <circle cx="12" cy="13" r="2" stroke="#7C3AED" stroke-width="1" fill="#1E1A2F"/>
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3>Pipeline CI/CD con Docker</h3>
+                            <p>Automatización de builds, tests y despliegue en entorno de pruebas. Integración continua con GitHub Actions.</p>
+                            <span class="tech-tag">Docker</span> <span class="tech-tag">GitHub Actions</span>
+                            <div class="empty-message">
+                                <span>🔧</span> <em>En desarrollo — demo próximamente</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Proyecto 2 -->
+                    <div class="project-card">
+                        <div class="card-img-placeholder">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="3" width="20" height="14" rx="2" stroke="#7C3AED" stroke-width="1.2" fill="none"/>
+                                <path d="M8 21H16" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round"/>
+                                <path d="M12 17V21" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round"/>
+                                <circle cx="12" cy="9" r="2" stroke="#7C3AED" stroke-width="1" fill="#1E1A2F"/>
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3>Cluster K8s con Terraform</h3>
+                            <p>Infraestructura como código aprovisionando un clúster de Kubernetes en la nube, usando Terraform y gestión de secrets.</p>
+                            <span class="tech-tag">Kubernetes</span> <span class="tech-tag">Terraform</span>
+                            <div class="empty-message">
+                                <span>📦</span> <em>Placeholder - arquitectura en definición</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Proyecto 3 -->
+                    <div class="project-card">
+                        <div class="card-img-placeholder">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <path d="M2 17L12 22L22 17" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <path d="M2 12L12 17L22 12" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3>Monitorización con Prometheus</h3>
+                            <p>Stack de observabilidad para infraestructura DevOps: métricas, logs y alertas en tiempo real.</p>
+                            <span class="tech-tag">Prometheus</span> <span class="tech-tag">Grafana</span>
+                            <div class="empty-message">
+                                <span>📊</span> <em>En roadmap — pronto más detalles</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; text-align: center; font-size: 0.85rem; color: #8b86a3;">✨ Cada proyecto representa una pieza clave en mi camino DevOps (cards placeholder, próximamente con repositorios reales)</p>
+            </section>
+        </main>
+
+        <footer>
+            <a href="https://github.com/asimonutti33" target="_blank" rel="noopener noreferrer" class="github-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48c-1.37-.38-2.84-.38-4.21 0C9.27.65 8.09 1 8.09 1A5.07 5.07 0 0 0 8 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 12 18.13V22"></path>
+                </svg>
+                github.com/asimonutti33
+            </a>
+            <div class="footer-copy">
+                Alejandro Simonutti · Ingeniero en Computación · DevOps Journey
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript sencillo para agregar interacción sutil y efecto de scroll con estilo dinámico -->
+    <script>
+        (function() {
+            // Efecto smooth scroll para enlaces internos del navbar
+            document.querySelectorAll('.nav-links a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                        });
+                        // pequeño feedback visual en la url sin recargar (historial)
+                        history.pushState(null, null, `#${targetId}`);
+                    }
+                });
+            });
+
+            // Si la URL tiene un hash al cargar, desplazar suavemente
+            if (window.location.hash) {
+                const id = window.location.hash.substring(1);
+                const element = document.getElementById(id);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+
+            // Agregar efecto de entrada sutil a elementos al hacer scroll (animaciones simples)
+            const fadeElements = document.querySelectorAll('.fade-up');
+            
+            // Función para verificar visibilidad y agregar clase visible (ya tienen animación inicial pero re-ejecutamos estilo)
+            // En realidad ya tienen fade-up pero queremos re-aplicar animación solo si no la tienen activa? Mejor mantenemos
+            // pero para asegurar que se vean todos con opacidad inicial? los estilos ya tienen fade-up con keyframes.
+            // Añadimos un pequeño observador para mejorar la experiencia cuando se muestran nuevos elementos (todos ya visibles)
+            // Pero para que cuando entren en scroll se sientan fluidos (ya tienen opacidad 0? no, tienen animación al cargar)
+            // Para mantener la modernidad, haremos que al cargar cada sección aparezca con animación ligera.
+            // También agregaremos un listener para que al llegar a proyectos se destaque sutilmente.
+            
+            // Manejar "active" en navbar según scroll (opcional para mejorar UX)
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            function updateActiveLink() {
+                let current = '';
+                const scrollPos = window.scrollY + 120;
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.style.color = '#cbd5e1';
+                    const href = link.getAttribute('href').substring(1);
+                    if (href === current && current !== '') {
+                        link.style.color = '#c084fc';
+                        link.style.fontWeight = '600';
+                    } else {
+                        link.style.fontWeight = '500';
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            window.addEventListener('load', updateActiveLink);
+            
+            // pequeño detalle: consola amigable con mensaje de portfolio
+            console.log("🚀 Portfolio DevOps - Alejandro Simonutti | Skills: Linux, Docker, CI/CD, K8s, Terraform");
+            
+            // Añadir tooltip sutil al hover de skills? no es necesario pero mejoramos interactividad con cards
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Solo feedback de que es un placeholder sin romper experiencia (console info)
+                    console.log("🔍 Proyecto placeholder - demo próximamente en repositorio de GitHub");
+                });
+            });
+            
+            // efecto hover para los items de skills: ya está en css
+        })();
+    </script>
+</body>
+</html>
